@@ -1,0 +1,68 @@
+:root {
+  color-scheme: dark;
+
+  --bg: #06110e;
+  --bg-raised: #0b1a16;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+
+  --forest: #0f5f4e;
+  --forest-deep: #053f35;
+  --sage: #879d78;
+  --sage-soft: #a9bb9c;
+  --lime: #c9e27a;
+  --lime-deep: #a8c94f;
+  --teal: #2fa08a;
+
+  --ink: #eef5f1;
+  --ink-body: #c9d6d0;
+  --muted: #8fa39b;
+  --on-lime: #06110e;
+
+  --font-display: "Plus Jakarta Sans", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  --step-hero: clamp(2.3rem, 1.1rem + 2.6vw, 3.6rem);
+  --step-h2: clamp(1.9rem, 1.2rem + 1.9vw, 2.75rem);
+  --step-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.45rem);
+  --step-lead: clamp(1.1rem, 1rem + 0.4vw, 1.25rem);
+  --step-body: 1.0625rem;
+  --step-small: 0.9rem;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --space-9: 112px;
+  --section-gap: var(--space-9);
+
+  --radius-pill: 999px;
+  --radius-panel: 24px;
+  --radius-card: 18px;
+  --radius-artefact: 12px;
+
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 30px 80px rgba(0, 0, 0, 0.45);
+  --glow-lime: 0 0 0 1px rgba(201, 226, 122, 0.25), 0 12px 40px rgba(201, 226, 122, 0.18);
+
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fluid: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+
+  --content-max: 1200px;
+  --gutter: 24px;
+  --header-h: 72px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --section-gap: var(--space-8);
+    --gutter: 16px;
+    --header-h: 64px;
+  }
+}

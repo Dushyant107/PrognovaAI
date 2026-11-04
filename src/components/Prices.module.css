@@ -1,0 +1,114 @@
+.switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  justify-self: start;
+}
+
+.switch label {
+  color: var(--muted);
+}
+
+.switch select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 10px 36px 10px 16px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23eef5f1' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.switch select option {
+  color: #06110e;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: baseline;
+}
+
+.table thead th {
+  font-weight: 500;
+  color: var(--muted);
+  font-size: var(--step-small);
+  border-bottom-color: var(--line-strong);
+}
+
+.table tbody th {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.table tbody tr {
+  transition: background-color 160ms var(--ease-out);
+}
+
+.table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.table td {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--ink-body);
+}
+
+.table thead th:not(:first-child) {
+  text-align: right;
+}
+
+.india {
+  color: var(--lime);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.voice {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--lime);
+  max-width: 64ch;
+}
+
+.who {
+  font-weight: 700;
+  color: var(--lime);
+  font-size: var(--step-small);
+}
+
+@media (min-width: 900px) {
+  .switch {
+    justify-self: end;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .table th:first-child,
+  .table td:first-child {
+    padding-left: var(--space-3);
+  }
+
+  .table th:last-child,
+  .table td:last-child {
+    padding-right: var(--space-3);
+  }
+}

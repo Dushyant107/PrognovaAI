@@ -1,0 +1,101 @@
+.railWrap {
+  margin-bottom: var(--space-7);
+  padding-top: var(--space-5);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.list {
+  display: grid;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--line);
+  transition: opacity 300ms var(--ease-out);
+}
+
+.item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-h3);
+  color: var(--muted);
+  line-height: 1.25;
+  transition: color 300ms var(--ease-out), text-shadow 300ms var(--ease-out);
+}
+
+.item[data-active] .num {
+  color: var(--lime);
+  text-shadow: 0 0 18px rgba(201, 226, 122, 0.45);
+}
+
+.itemBody {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.loop {
+  color: var(--sage-soft);
+  font-weight: 500;
+  font-size: var(--step-small);
+}
+
+.inlineArtefact {
+  margin-top: var(--space-2);
+}
+
+.sticky {
+  display: none;
+}
+
+.artefactCard {
+  display: grid;
+  gap: var(--space-3);
+  grid-area: 1 / 1;
+}
+
+.caption {
+  font-size: var(--step-small);
+  color: var(--sage-soft);
+  font-weight: 500;
+  padding-left: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 6fr 5fr;
+    column-gap: var(--space-9);
+    align-items: start;
+  }
+
+  .inlineArtefact {
+    display: none;
+  }
+
+  .sticky {
+    display: grid;
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-8));
+  }
+
+  .item {
+    padding-block: var(--space-7);
+    min-height: 240px;
+    opacity: 0.55;
+  }
+
+  .item[data-active] {
+    opacity: 1;
+  }
+}

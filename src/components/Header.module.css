@@ -1,0 +1,130 @@
+.header {
+  position: fixed;
+  top: 14px;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--gutter);
+  pointer-events: none;
+}
+
+.pill {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  width: min(1040px, 100%);
+  height: 60px;
+  padding: 6px 6px 6px 20px;
+  border-radius: var(--radius-pill);
+  background: rgba(8, 20, 17, 0.66);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+.logo {
+  display: block;
+  flex: none;
+}
+
+.logo img {
+  width: 120px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
+
+.nav {
+  display: none;
+  flex: 1;
+  justify-content: center;
+  gap: var(--space-5);
+}
+
+.nav a {
+  position: relative;
+  text-decoration: none;
+  color: var(--ink-body);
+  font-weight: 500;
+  padding: 6px 2px;
+  transition: color 160ms var(--ease-out);
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms var(--ease-fluid);
+}
+
+.nav a:hover {
+  color: var(--ink);
+}
+
+.nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.actions .button {
+  padding: 10px 18px;
+}
+
+.country select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 9px 30px 9px 14px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23eef5f1' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.country select option {
+  color: #06110e;
+}
+
+@media (min-width: 900px) {
+  .nav {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    top: 10px;
+  }
+  .pill {
+    gap: var(--space-3);
+    height: 56px;
+    padding-left: 14px;
+  }
+  .logo img {
+    width: 100px;
+  }
+  .actions .button {
+    padding: 9px 14px;
+  }
+  .country select {
+    padding: 8px 26px 8px 12px;
+    background-position: right 10px center;
+  }
+}

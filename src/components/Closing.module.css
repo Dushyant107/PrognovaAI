@@ -1,0 +1,60 @@
+.band {
+  position: relative;
+  margin-top: var(--section-gap);
+  padding-block: var(--space-9);
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  background:
+    radial-gradient(900px 420px at 15% 120%, rgba(201, 226, 122, 0.16), transparent 60%),
+    radial-gradient(800px 400px at 90% -20%, rgba(47, 160, 138, 0.28), transparent 60%),
+    rgba(255, 255, 255, 0.02);
+}
+
+.band h2 {
+  color: var(--ink);
+}
+
+.band .lead {
+  color: var(--ink-body);
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.whatsapp {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--line-strong);
+  padding: 8px 4px;
+  transition: color 160ms var(--ease-out);
+}
+
+.whatsapp:hover {
+  color: var(--ink);
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: 7fr 5fr;
+    align-items: center;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+}
