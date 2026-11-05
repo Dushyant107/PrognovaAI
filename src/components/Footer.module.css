@@ -4,7 +4,10 @@
 }
 
 .inner {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   gap: var(--space-5);
 }
 
@@ -13,10 +16,6 @@
   height: auto;
   filter: brightness(0) invert(1);
   opacity: 0.9;
-}
-
-.inner p {
-  max-width: 68ch;
 }
 
 .links {
@@ -35,13 +34,5 @@
 
 .links a:hover {
   color: var(--ink);
-  border-bottom-color: var(--lime);
-}
-
-@media (min-width: 900px) {
-  .inner {
-    grid-template-columns: auto 1fr auto;
-    align-items: start;
-    gap: var(--space-7);
-  }
+  border-bottom-color: var(--teal);
 }

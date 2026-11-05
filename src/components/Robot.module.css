@@ -1,0 +1,146 @@
+.top {
+  display: grid;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.line {
+  display: block;
+}
+
+.dim {
+  color: var(--teal);
+}
+
+.refusal {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  max-width: 36ch;
+}
+
+.devices {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-panel);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--line);
+}
+
+.deviceList {
+  display: grid;
+}
+
+.device {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 4px var(--space-3);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--line);
+}
+
+.deviceIndex {
+  grid-row: span 2;
+  font-family: var(--font-mono);
+  font-size: var(--step-mono);
+  color: var(--teal);
+  padding-top: 4px;
+}
+
+.deviceName {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.deviceText {
+  color: var(--muted);
+  font-size: var(--step-small);
+}
+
+.fits {
+  color: var(--muted);
+}
+
+.timelineHead {
+  margin-top: var(--space-9);
+  max-width: 24ch;
+}
+
+.timelineTitle {
+  font-weight: 500;
+}
+
+.timeline {
+  display: grid;
+  margin-top: var(--space-7);
+  border-top: 1px solid var(--line);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6) 0 var(--space-6) var(--space-6);
+  border-bottom: 1px solid var(--line);
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(var(--space-6) + 6px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--teal);
+  background: var(--bg);
+  box-shadow: 0 0 12px rgba(63, 193, 176, 0.5);
+}
+
+.year {
+  font-family: var(--font-mono);
+  font-size: var(--step-mono);
+  letter-spacing: 0.12em;
+  color: var(--teal);
+}
+
+.step p {
+  max-width: 58ch;
+}
+
+.note {
+  margin-top: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .top {
+    grid-template-columns: 7fr 5fr;
+    column-gap: var(--space-8);
+  }
+
+  .timeline {
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 0;
+  }
+
+  .step {
+    padding: var(--space-6) var(--space-5) var(--space-6) 0;
+    border-bottom: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .step::before {
+    top: -6px;
+    left: 0;
+  }
+}

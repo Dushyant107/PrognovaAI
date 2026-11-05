@@ -1,0 +1,76 @@
+.title {
+  margin-top: var(--space-4);
+  display: grid;
+}
+
+.line {
+  display: block;
+}
+
+.dim {
+  color: var(--teal);
+}
+
+.cards {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.card {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  padding: var(--space-6);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  overflow: hidden;
+  transition: border-color 240ms var(--ease-out), box-shadow 300ms var(--ease-out);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(360px 200px at 15% 0%, rgba(63, 193, 176, 0.18), transparent 70%);
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 300ms var(--ease-out);
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card > * {
+  position: relative;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: var(--step-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.card p {
+  color: var(--ink-body);
+}
+
+.closing {
+  margin-top: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+}

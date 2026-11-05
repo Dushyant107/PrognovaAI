@@ -1,429 +1,369 @@
-export type StageId = "reports" | "call" | "stay" | "visa" | "treatment" | "home"
-export type StageState = "empty" | "planned" | "requested" | "confirmed"
-export type RailState = Record<StageId, StageState>
+// All copy on the site, taken from prognova.ai.
 
-export const stageOrder: StageId[] = ["reports", "call", "stay", "visa", "treatment", "home"]
-
-export const emptyRail: RailState = {
-  reports: "empty",
-  call: "empty",
-  stay: "empty",
-  visa: "empty",
-  treatment: "empty",
-  home: "empty",
-}
-
-export const stages: {
-  id: StageId
-  short: string
-  title: string
-  text: string
-  loop: string
-  artefact: Artefact
-}[] = [
-  {
-    id: "reports",
-    short: "Reports",
-    title: "Share your reports",
-    text: "Upload what you already have. The assistant lists what is missing and what a hospital will ask for next.",
-    loop: "A coordinator reviews every upload",
-    artefact: {
-      kind: "list",
-      title: "Your reports",
-      rows: [
-        ["Knee X-ray, both sides", "received"],
-        ["MRI report, March", "received"],
-        ["Blood panel", "missing"],
-        ["GP referral letter", "optional"],
-      ],
-    },
-  },
-  {
-    id: "call",
-    short: "Call",
-    title: "Book a free call",
-    text: "The assistant finds a slot with a coordinator and sends a short agenda built from your questions.",
-    loop: "Coordinator takes the call",
-    artefact: {
-      kind: "slot",
-      title: "Planning call",
-      rows: [
-        ["Thursday 14 November", "10:30 GMT"],
-        ["With", "Priya, coordinator"],
-        ["Cost", "£0"],
-      ],
-    },
-  },
-  {
-    id: "stay",
-    short: "Stay",
-    title: "Choose your stay",
-    text: "Three stays near your hospital, side by side, with a companion room and airport transfers if you want them.",
-    loop: "Supplier confirms the room",
-    artefact: {
-      kind: "stays",
-      title: "Stays near Apollo, Chennai",
-      rows: [
-        ["Serviced apartment, 1.2 km", "£38 a night"],
-        ["Hotel with lift and ramp, 0.8 km", "£52 a night"],
-        ["Recovery guesthouse, 2 km", "£29 a night"],
-      ],
-    },
-  },
-  {
-    id: "visa",
-    short: "Visa letter",
-    title: "Your visa letter",
-    text: "Once the hospital accepts your case, the assistant requests its invitation letter and tracks it until it is in your workspace.",
-    loop: "The hospital issues the letter",
-    artefact: {
-      kind: "status",
-      title: "Visa invitation letter",
-      rows: [
-        ["Case accepted by hospital", "confirmed"],
-        ["Letter requested", "requested"],
-        ["Letter in your workspace", "planned"],
-      ],
-    },
-  },
-  {
-    id: "treatment",
-    short: "Treatment",
-    title: "During your stay",
-    text: "Appointments, transfers and coordinator notes in one place, updated as the hospital updates them.",
-    loop: "Your doctor makes every clinical decision",
-    artefact: {
-      kind: "list",
-      title: "This week",
-      rows: [
-        ["Pre-op assessment", "Mon 09:00"],
-        ["Surgery", "Wed 07:30"],
-        ["Physio, first session", "Fri 11:00"],
-        ["Transfer to hotel", "Fri 16:00"],
-      ],
-    },
-  },
-  {
-    id: "home",
-    short: "Home",
-    title: "Back home",
-    text: "Discharge papers, return flights and the follow-up tasks from your provider stay in reach after you land.",
-    loop: "Coordinator checks in at two weeks",
-    artefact: {
-      kind: "list",
-      title: "Follow-up",
-      rows: [
-        ["Discharge summary", "saved"],
-        ["Physio plan, 6 weeks", "saved"],
-        ["Review call with surgeon", "planned"],
-      ],
-    },
-  },
+export const nav = [
+  { label: "How it works", href: "#how-it-works" },
+  { label: "Why now", href: "#why-now" },
+  { label: "Proof", href: "#proof" },
+  { label: "Traction", href: "#traction" },
+  { label: "The plan", href: "#plan" },
 ]
 
-export type Artefact = {
-  kind: "list" | "slot" | "stays" | "status" | "price"
-  title: string
-  rows: [string, string][]
+export const links = {
+  chat: "https://www.prognova.ai/chat",
+  email: "hello@prognovahealth.com",
+  privacy: "https://www.prognova.ai/privacy",
 }
 
-export type Country = "UK" | "US" | "UAE"
-
-export const countries: Record<Country, { label: string; currency: string; home: string }> = {
-  UK: { label: "United Kingdom", currency: "GBP", home: "UK price" },
-  US: { label: "United States", currency: "USD", home: "US price" },
-  UAE: { label: "United Arab Emirates", currency: "AED", home: "UAE price" },
+export const hero = {
+  eyebrow: "Clinical AI · MedGemma 1.5 · 4B parameters",
+  title: "One clinical brain.",
+  lead: "Every doctor deserves an intelligence that knows their patient. Every medical robot will need a brain it can trust.",
+  hint: "Scroll to bring the record together",
+  cta: "Try Prognova AI",
 }
 
-export const prices: { treatment: string; home: Record<Country, number>; india: Record<Country, number> }[] = [
-  { treatment: "Hip replacement (one side)", home: { UK: 17000, US: 40000, UAE: 95000 }, india: { UK: 5000, US: 6500, UAE: 23500 } },
-  { treatment: "Knee replacement (one side)", home: { UK: 16000, US: 35000, UAE: 88000 }, india: { UK: 5000, US: 6500, UAE: 23500 } },
-  { treatment: "3 dental implants with crowns", home: { UK: 9000, US: 12000, UAE: 30000 }, india: { UK: 3000, US: 3900, UAE: 14000 } },
-  { treatment: "IVF cycle with donor eggs", home: { UK: 9000, US: 25000, UAE: 45000 }, india: { UK: 4500, US: 5800, UAE: 21000 } },
-  { treatment: "Full-body health check", home: { UK: 8000, US: 5000, UAE: 12000 }, india: { UK: 2000, US: 2600, UAE: 9400 } },
-]
-
-export function formatMoney(value: number, country: Country) {
-  const { currency } = countries[country]
-  return new Intl.NumberFormat(country === "US" ? "en-US" : "en-GB", {
-    style: "currency",
-    currency,
-    maximumFractionDigits: 0,
-  }).format(value)
+export const problem = {
+  titleA: "The doctor has minutes.",
+  titleB: "The record is everywhere.",
+  paragraphs: [
+    "A patient's record is scattered across labs, imaging, prescriptions, notes and discharge summaries, often across hospitals, and the doctor has minutes to put it together. The AI on their phone answers from the literature or from a general model in someone else's cloud. It is fluent, general, and unverifiable at the bedside.",
+    "Nobody has trained a model on the verified record of the patient in the room, because that record never leaves the hospital.",
+  ],
+  pieces: ["Lab report", "Imaging", "Prescription", "Clinical notes", "Discharge summary", "Second hospital"],
+  oneRecord: "…until it is one record.",
 }
 
-export const treatments = [
-  {
-    title: "IVF and fertility",
-    text: "Treatment cycles, tests and how long to stay.",
-    question: "Have you had a cycle before, and do you have your hormone results to hand?",
+export const ask = {
+  title: "Every answer points to the line it came from.",
+  text: "Ask the record a question. Prognova answers from the page and shows the exact line it read, or it says the answer is not there. It does not fill the gap with a guess.",
+  prompt: "Choose a question. The answer appears here with the line it came from.",
+  refusal: "If it cannot point to the line, it says nothing. That refusal is the product.",
+  questions: [
+    {
+      id: "q1",
+      label: "Are the blood sugar results in range?",
+      answer: "No. HbA1c is 8.2 % against a reference of under 5.7 %, and fasting glucose is 164 mg/dL against 70 – 99. Both are above range.",
+      cites: [14, 15],
+      page: "Laboratory report, page 2, lines 14 and 15",
+    },
+    {
+      id: "q2",
+      label: "Is there a family history of diabetes?",
+      answer: "The record does not say. The family history section on this report is blank, so there is nothing to cite.",
+      cites: [],
+      page: "Family history · blank · nothing to cite",
+    },
+  ],
+  report: {
+    title: "Laboratory report",
+    page: "Page 2 of 2",
+    meta: "Patient: fictional · Specimen: venous blood, fasting",
+    rows: [
+      { line: 10, test: "Haemoglobin", result: "13.9 g/dL", ref: "13.0 – 17.0" },
+      { line: 11, test: "White cell count", result: "6.8 × 10⁹/L", ref: "4.0 – 11.0" },
+      { line: 12, test: "Platelets", result: "245 × 10⁹/L", ref: "150 – 410" },
+      { line: 13, test: "Creatinine", result: "0.9 mg/dL", ref: "0.7 – 1.3" },
+      { line: 14, test: "HbA1c", result: "8.2 %", ref: "< 5.7" },
+      { line: 15, test: "Glucose, fasting", result: "164 mg/dL", ref: "70 – 99" },
+      { line: 16, test: "TSH", result: "2.1 mIU/L", ref: "0.4 – 4.0" },
+      { line: 17, test: "Cholesterol, total", result: "182 mg/dL", ref: "< 200" },
+    ],
+    familyHistory: "Blank. Nothing is recorded here.",
+    note: "Fictional example. Prognova does not diagnose.",
   },
-  {
-    title: "Cancer care",
-    text: "Second opinions, surgery and treatment plans.",
-    question: "Do you have a current staging report, or should we start with a second opinion?",
-  },
-  {
-    title: "Dental care",
-    text: "Implants, crowns and how many visits you need.",
-    question: "How many teeth are involved, and can you stay for two visits a few months apart?",
-  },
-  {
-    title: "Orthopaedics",
-    text: "Hip and knee replacement and the recovery after.",
-    question: "Which joint, and roughly when could you travel for about three weeks?",
-  },
-]
-
-export const faqs = [
-  {
-    q: "Is the assistant a doctor?",
-    a: "No. It plans the practical side of your trip: options, prices, stays, transfers and paperwork. Every clinical decision is made by the treating doctor, and the assistant will say so if you ask it a medical question.",
-  },
-  {
-    q: "What is the free planning call?",
-    a: "A call with a coordinator to work through dates, accommodation and transfers. There is no charge and no commitment. The assistant prepares an agenda from what you have told it.",
-  },
-  {
-    q: "Are these prices final treatment quotes?",
-    a: "No. They are starting prices from partner hospitals. The final cost depends on the treatment plan your doctor agrees with you, and you see it before you book anything.",
-  },
-  {
-    q: "Can I book my own flights or accommodation?",
-    a: "Yes. Every service is optional. Keep only what you want the assistant and coordinator to arrange.",
-  },
-  {
-    q: "What happens to my reports?",
-    a: "They stay in your private workspace. A coordinator reviews them, and nothing is shared with a hospital until you say so.",
-  },
-  {
-    q: "What does planned, requested and confirmed mean?",
-    a: "Planned is something in your plan that nobody has booked yet. Requested means a supplier or hospital has been asked. Confirmed means they have said yes and you have it in writing.",
-  },
-]
-
-export type Turn = {
-  role: "you" | "assistant"
-  text: string
-  artefact?: Artefact
-  rail?: Partial<RailState>
-  handoff?: boolean
 }
 
-export const demoScript: Turn[] = [
-  {
-    role: "you",
-    text: "I need a knee replacement. I'm in Leeds and could travel in late January.",
+export const jobs = {
+  title: "Read. Remember. Reason. Run.",
+  text: "One small medical language model, trained on verified hospital and lab records, doing four jobs.",
+  model: "MedGemma 1.5 · 4B parameters · fine-tuned with QLoRA",
+  items: [
+    {
+      n: "01",
+      name: "Read",
+      text: "Reads clinical documents, lab reports first, and keeps the page and line each value came from.",
+      status: "v1 · today",
+      live: true,
+    },
+    {
+      n: "02",
+      name: "Remember",
+      text: "Remembers each patient across visits and hospitals, in a context the patient owns.",
+      status: "v2 · next",
+      live: false,
+    },
+    {
+      n: "03",
+      name: "Reason",
+      text: "Reasons over the record with a doctor signing off on every answer.",
+      status: "Off until validated",
+      live: false,
+    },
+    {
+      n: "04",
+      name: "Run",
+      text: "Will run the same model inside devices: it is small enough to fit onboard.",
+      status: "Device licensing · 2029+",
+      live: false,
+    },
+  ],
+  footnote:
+    "v1 reads the record. v2 learns continuously: each patient gets a persistent context they own, and every doctor correction feeds back as training signal.",
+}
+
+export const whyNow = {
+  title: "The model is free. The data is not.",
+  text: "Anyone can download a medical model. Nobody can download the verified record of the patient in the room, and that record lives inside hospitals.",
+  items: [
+    {
+      tag: "Open base models · MedGemma 1.5 · 4B",
+      title: "The model is nearly free.",
+      text: "Open medical base models such as Google's MedGemma mean a small team can fine-tune a competitive clinical model. The scarce input is now verified data, not compute.",
+    },
+    {
+      tag: "34,000+ beds by FY2030 · ABDM",
+      title: "Hospitals are digitising.",
+      text: "India's corporate hospital chains are adding beds and moving records onto digital systems under the national ABDM framework. Those records are the training corpus.",
+    },
+    {
+      tag: "DPDP Act 2023",
+      title: "Regulation favours evidence.",
+      text: "India's data protection law requires consent and purpose limitation for health data. A model whose every answer traces to a consented record, with a context the patient controls, is the easy way to comply.",
+    },
+    {
+      tag: "OpenEvidence · 40%+ of US physicians",
+      title: "Adoption is settled. Grounding is not.",
+      text: "Doctors already use AI at the point of care. The open question is no longer whether they will, but whether the answer comes from the patient's own record.",
+    },
+  ],
+  market: {
+    label: "Market · rating-agency figures only",
+    rows: [
+      { name: "India private hospitals", value: "$122B (2025) → $202B by 2030", source: "Source: Brickwork Ratings" },
+      { name: "Large private chains", value: "18 large chains · Rs 40,000 crore outlay", source: "Source: ICRA" },
+    ],
   },
-  {
-    role: "assistant",
-    text: "Thanks. Here is a first look. Knee replacement in India starts from £5,000 at Prognova partner hospitals, against a typical £16,000 self-pay price in the UK. Late January works for a three-week stay. If you share your X-ray and MRI report, I can ask a hospital to review your case.",
-    artefact: {
-      kind: "price",
-      title: "Knee replacement (one side)",
-      rows: [
-        ["UK self-pay", "£16,000"],
-        ["India with Prognova", "from £5,000"],
+}
+
+export const robot = {
+  titleA: "Beside the doctor today.",
+  titleB: "Inside the robot tomorrow.",
+  text: "One model, trained on the patient's verified record. Beside the doctor it shows what changed since the last visit and what to check next, and every answer carries the exact line it came from.",
+  refusal: "The refusal is what lets a doctor trust it today, and what will let a care robot run it tomorrow.",
+  researchLabel: "Where the same brain runs next · Research",
+  devices: [
+    { name: "Ward assistant", text: "Checks on a patient overnight." },
+    { name: "Triage kiosk", text: "Takes a history." },
+    { name: "Home-care unit", text: "Watches recovery after discharge." },
+  ],
+  fits: "MedGemma 1.5 · 4B parameters · fits onboard",
+  timelineTitle: "The hospital pays for the brain, then the device does.",
+  timeline: [
+    {
+      year: "2027",
+      title: "Clinical assistant subscription",
+      text: "For doctors, and for patients in aftercare, answering from the verified record. Pricing will be set with the first paid pilots.",
+    },
+    {
+      year: "2028",
+      title: "Clinical reasoning tier",
+      text: "A higher tier, once doctor-in-the-loop reasoning passes clinical validation.",
+    },
+    {
+      year: "2029+",
+      title: "Device & OEM licensing",
+      text: "The model embedded in diagnostic instruments, patient-monitoring devices and care robots. Not surgical robotics: the brain that knows the patient, not the hand that operates.",
+    },
+  ],
+  note: "Prognova is pre-revenue by design. The first paid pilots are planned for 2027.",
+}
+
+export const proof = {
+  title: "A 4B model, read against the frontier.",
+  text: "We put our 4B model against Claude Opus 5.5 and GPT-6.1 Sol, both at high effort, on identical held-out lab reports. It missed nothing and invented nothing.",
+  setup: "Lab reports, 60 held-out pages, identical inputs.",
+  stats: [
+    { value: 99.1, suffix: "%", label: "of flags correct", compare: "Claude Opus 5.5 and GPT-6.1 Sol (high): 85.7%" },
+    { value: 100, suffix: "%", label: "of abnormal results caught", compare: "" },
+    { value: 0, suffix: "%", label: "invented values", compare: "" },
+  ],
+  tableNote: "Lab reports: 60 held-out pages, identical inputs for every model.",
+  columns: ["Model", "Abnormal caught", "Flags correct", "Invented values", "Cost / page", "Time / page"],
+  rows: [
+    { model: "Prognova v1 (4B)", us: true, cells: ["100%", "99.1%", "0%", "$0.014", "23 s"] },
+    { model: "Claude Opus 5.5 (high)", us: false, cells: ["94.4%", "85.7%", "0%", "$0.018", "5 s"] },
+    { model: "GPT-6.1 Sol (high)", us: false, cells: ["94.4%", "85.7%", "0%", "$0.005", "4 s"] },
+    { model: "Base MedGemma", us: false, cells: ["47%", "68%", "28%", "—", "—"] },
+  ],
+  dash: "— not supplied.",
+  honest: {
+    title: "Read it honestly.",
+    points: [
+      "GPT-6.1 Sol is faster and cheaper per page. Our advantage is precision and grounding, not raw speed.",
+      "Counts are small, and we say so. Confidence intervals come with the next release.",
+      "Lab reports are the first report type. Imaging, prescriptions and clinical notes are benchmarked next.",
+    ],
+  },
+}
+
+export const traction = {
+  title: "The data is flowing.",
+  stats: [
+    { value: 25003, label: "lab visits processed through the evidence pipeline" },
+    { value: 481, label: "automated tests, across ~12,000 lines of Python" },
+  ],
+  note: "Pre-revenue by design; first paid pilots planned for 2027.",
+}
+
+export const landscape = {
+  titleA: "Everyone knows medicine.",
+  titleB: "Nobody knows the patient.",
+  text: "OpenEvidence knows the medical literature. Prognova knows the patient.",
+  caption: "Five approaches to clinical AI: what each knows, what it is grounded in, and where it stops.",
+  rows: [
+    {
+      name: "OpenEvidence",
+      sub: "$12B valuation",
+      knows: "The medical literature",
+      grounded: "Citations to papers",
+      stops: "What the literature says about a condition, not what this patient's record says.",
+      us: false,
+    },
+    {
+      name: "General models",
+      sub: "OpenAI, Anthropic, Google",
+      knows: "The internet",
+      grounded: "None by default",
+      stops:
+        "Fluent and unverifiable at the bedside. On held-out lab reports, Claude Opus 5.5 and GPT-6.1 Sol at high effort: 85.7% of flags correct, against 99.1% for Prognova v1.",
+      us: false,
+    },
+    {
+      name: "Ambient scribes",
+      sub: "Abridge, Nuance",
+      knows: "Conversations",
+      grounded: "The visit transcript",
+      stops: "What was said in one visit. No memory of the record across visits and hospitals.",
+      us: false,
+    },
+    {
+      name: "EHR vendors",
+      sub: "Epic, Oracle",
+      knows: "Their own records",
+      grounded: "Varies; US-centric",
+      stops: "One vendor's system and one market. No presence in Indian private hospitals.",
+      us: false,
+    },
+    {
+      name: "Prognova",
+      sub: "MedGemma 1.5 · 4B",
+      knows: "The patient: verified hospital and lab records",
+      grounded: "The exact line in the record",
+      stops: "At the edge of the record. If it cannot point to the line, it says nothing.",
+      us: true,
+    },
+  ],
+  closing:
+    "Every row above knows medicine. None of them is trained on the patient in the room. The real threat is an EHR vendor or a frontier lab going on-premise; by then we want the records in our corpus, the doctors' corrections in our training set, and the model inside the instruments.",
+}
+
+export const moat = {
+  titleA: "You can download a model.",
+  titleB: "You cannot replicate the training corpus.",
+  text: "The code is not the moat. Three things are.",
+  items: [
+    {
+      n: "01",
+      tag: "The corpus",
+      title: "A corpus nobody else has.",
+      text: "Verified clinical records from partner labs, every case that comes through the referral network, and every correction a doctor makes: labelled, patient-level data that cannot be scraped from the internet or bought from a vendor.",
+    },
+    {
+      n: "02",
+      tag: "Ground truth",
+      title: "Compounding ground truth.",
+      text: "Every answer a doctor confirms becomes ground truth. Each release retrains on the best open base model, so Prognova gains from base-model progress instead of competing with it.",
+    },
+    {
+      n: "03",
+      tag: "Trust",
+      title: "Trust that ships inside devices.",
+      text: "Doctors accept AI they can check. Only a model that refuses to guess is safe to run inside an instrument or a care robot.",
+    },
+  ],
+  closing: "Each of these is work a competitor must repeat, hospital by hospital.",
+}
+
+export const plan = {
+  title: "Eighteen months, three gates.",
+  text: "From reading the record to reasoning on it. Each phase ends on a gate.",
+  phases: [
+    {
+      phase: "Phase 1",
+      months: "Months 0–6",
+      title: "Prove reading",
+      milestones: ["Benchmark imaging, prescriptions and notes.", "Build a non-Indian test set."],
+      gate: "Reading accuracy with confidence intervals; first hospital records in the corpus.",
+    },
+    {
+      phase: "Phase 2",
+      months: "Months 6–12",
+      title: "Patient record",
+      milestones: [
+        "Every report type in one longitudinal record.",
+        "Pilots in partner hospitals.",
+        "First instrument integration.",
       ],
+      gate: "Doctors use it weekly in a pilot hospital.",
     },
-    rail: { reports: "planned" },
-  },
-  {
-    role: "you",
-    text: "Where would I stay? My wife is coming with me.",
-  },
-  {
-    role: "assistant",
-    text: "Here are three stays within two kilometres of the hospital, all with a second bed and step-free access. I have added airport transfers for both of you. A coordinator confirms availability before anything is booked.",
-    artefact: {
-      kind: "stays",
-      title: "Stays near the hospital",
-      rows: [
-        ["Serviced apartment, 1.2 km", "£38 a night"],
-        ["Hotel with lift and ramp, 0.8 km", "£52 a night"],
-        ["Recovery guesthouse, 2 km", "£29 a night"],
-      ],
+    {
+      phase: "Phase 3",
+      months: "Months 12–18",
+      title: "Clinical reasoning",
+      milestones: ["Doctor-in-the-loop reasoning.", "Clinician-led validation.", "First paid contracts.", "First edge model."],
+      gate: "Paid pilot converted; Series A metrics.",
     },
-    rail: { stay: "planned" },
-  },
-  {
-    role: "you",
-    text: "Do I need a visa?",
-  },
-  {
-    role: "assistant",
-    text: "Yes, a medical visa. Once the hospital accepts your case, I ask it for an invitation letter and keep it in your workspace. You apply for the visa yourself with that letter. I have marked it as requested so you can see where it is.",
-    artefact: {
-      kind: "status",
-      title: "Visa invitation letter",
-      rows: [
-        ["Case accepted by hospital", "planned"],
-        ["Letter requested", "requested"],
-      ],
-    },
-    rail: { visa: "requested" },
-  },
-  {
-    role: "you",
-    text: "Is this the right operation for me?",
-  },
-  {
-    role: "assistant",
-    text: "That is a question for your doctor, not for me. I can set up a free call with a coordinator who will arrange a conversation with an orthopaedic surgeon. I have held a slot for Thursday.",
-    artefact: {
-      kind: "slot",
-      title: "Planning call",
-      rows: [
-        ["Thursday 14 November", "10:30 GMT"],
-        ["With", "Priya, coordinator"],
-        ["Cost", "£0"],
-      ],
-    },
-    rail: { call: "confirmed" },
-    handoff: true,
-  },
-]
-
-export type Intent = {
-  match: RegExp
-  reply: Turn
+  ],
 }
 
-export const intents: Intent[] = [
-  {
-    match: /should i|is it safe|which treatment|right for me|do i need surgery|diagnos/i,
-    reply: {
-      role: "assistant",
-      text: "That is a clinical question, so it is for your doctor. I can arrange a conversation with a specialist through a coordinator on the free call.",
-      rail: { call: "planned" },
-      handoff: true,
+export const risks = {
+  titleA: "What could kill us,",
+  titleB: "and what we do about it.",
+  items: [
+    {
+      risk: "Clinical error.",
+      text: "A wrong answer in front of a doctor can harm a patient.",
+      response:
+        "Every answer cites the line it came from and a doctor signs off. Reasoning stays off until it is validated, and each report type passes its own release gate.",
     },
-  },
-  {
-    match: /visa|letter|invitation/i,
-    reply: {
-      role: "assistant",
-      text: "You will need a medical visa. Once a hospital accepts your case, I request its invitation letter and keep it in your workspace. You apply with that letter.",
-      artefact: {
-        kind: "status",
-        title: "Visa invitation letter",
-        rows: [
-          ["Case accepted by hospital", "planned"],
-          ["Letter requested", "planned"],
-        ],
-      },
-      rail: { visa: "planned" },
+    {
+      risk: "Small evidence base.",
+      text: "The lab-report comparison rests on 60 held-out pages. Counts are small, and there are no confidence intervals yet.",
+      response:
+        "The first phase of the plan, Prove reading (months 0–6), exists to fix this. Confidence intervals come with the next release.",
     },
-  },
-  {
-    match: /hotel|stay|apartment|accommodation|room|where would i|where do i/i,
-    reply: {
-      role: "assistant",
-      text: "I shortlist stays close to the hospital with step-free access and a second bed if someone is coming with you. A coordinator confirms the room before you pay.",
-      artefact: {
-        kind: "stays",
-        title: "Stays near the hospital",
-        rows: [
-          ["Serviced apartment, 1.2 km", "£38 a night"],
-          ["Hotel with lift and ramp, 0.8 km", "£52 a night"],
-          ["Recovery guesthouse, 2 km", "£29 a night"],
-        ],
-      },
-      rail: { stay: "planned" },
+    {
+      risk: "Data access.",
+      text: "Today's corpus is lab data. The full patient record sits inside hospitals and does not leave them.",
+      response:
+        "Growing the corpus to full hospital records is the first priority, and the verified doctor-feedback loop is the durable defence.",
     },
-  },
-  {
-    match: /interpret|language|translat|speak/i,
-    reply: {
-      role: "assistant",
-      text: "An interpreter can join your appointments and calls. Tell me the language and I will add it to the plan; a coordinator confirms who it will be.",
-      rail: { treatment: "planned" },
+    {
+      risk: "Base-model dependence.",
+      text: "Prognova fine-tunes Google's MedGemma, so the base model's licence is not ours to set.",
+      response: "A licence change would cost a retrain on another open base model, which our pipeline is built to do.",
     },
-  },
-  {
-    match: /transfer|airport|pick ?up|taxi|drive/i,
-    reply: {
-      role: "assistant",
-      text: "Someone meets you at the airport, and rides between hotel, clinic and airport are arranged around your appointments. They are optional and listed apart from treatment costs.",
-      rail: { stay: "planned" },
+    {
+      risk: "Regulation.",
+      text: "Prognova has no regulatory clearance. Classification as software as a medical device is likely once reasoning ships.",
+      response:
+        "Cited evidence and doctor sign-off are designed to keep Prognova an assistive, decision-support tool under India's current rules. The classification work is budgeted.",
     },
-  },
-  {
-    match: /follow.?up|after|home|discharge|recover/i,
-    reply: {
-      role: "assistant",
-      text: "Discharge papers, your physio plan and any review calls stay in your workspace after you fly home. A coordinator checks in at two weeks.",
-      rail: { home: "planned" },
-    },
-  },
-  {
-    match: /price|cost|how much|cheap|expensive|pay|£|\$/i,
-    reply: {
-      role: "assistant",
-      text: "Treatment costs and travel costs are listed apart. Prognova prices are starting prices; the final cost depends on the plan your doctor agrees with you. The table lower on this page compares typical home prices with India.",
-      artefact: {
-        kind: "price",
-        title: "Knee replacement (one side)",
-        rows: [
-          ["UK self-pay", "£16,000"],
-          ["India with Prognova", "from £5,000"],
-        ],
-      },
-    },
-  },
-  {
-    match: /report|x-?ray|mri|scan|upload|document/i,
-    reply: {
-      role: "assistant",
-      text: "Upload whatever you have to your private workspace. I list what is missing, and a coordinator reviews it before anything is sent to a hospital.",
-      rail: { reports: "planned" },
-    },
-  },
-  {
-    match: /call|talk|speak to someone|coordinator|human/i,
-    reply: {
-      role: "assistant",
-      text: "The first planning call is free. I can hold a slot with a coordinator and send over an agenda built from what you have told me.",
-      rail: { call: "planned" },
-    },
-  },
-  {
-    match: /knee|hip|ortho|joint/i,
-    reply: {
-      role: "assistant",
-      text: "Hip and knee replacements are the most common trips we plan. Expect about three weeks in India including early physio. Which joint, and roughly when could you travel?",
-      rail: { reports: "planned" },
-    },
-  },
-  {
-    match: /ivf|fertility|egg|embryo/i,
-    reply: {
-      role: "assistant",
-      text: "IVF trips usually mean two visits or one longer stay. If you have hormone results from a previous cycle, upload them and a coordinator will ask a clinic how long you would need to stay.",
-      rail: { reports: "planned" },
-    },
-  },
-  {
-    match: /dental|tooth|teeth|implant|crown/i,
-    reply: {
-      role: "assistant",
-      text: "Implants usually take two visits a few months apart. Tell me how many teeth are involved and I will plan both trips side by side.",
-      rail: { reports: "planned" },
-    },
-  },
-  {
-    match: /cancer|oncolog|tumou?r|chemo/i,
-    reply: {
-      role: "assistant",
-      text: "Many people start with a second opinion from an oncologist before deciding to travel. Upload your current staging report and a coordinator will arrange that conversation.",
-      rail: { reports: "planned" },
-    },
-  },
-]
+  ],
+}
 
-export const fallbackReply: Turn = {
-  role: "assistant",
-  text: "I can plan stays, transfers, prices and visa letters. For that one, a coordinator will reply on the free planning call.",
-  rail: { call: "planned" },
-  handoff: true,
+export const closing = {
+  title: ["Clinical AI will be judged", "on what it can prove,", "not what it can say."],
+  raising: "We are raising.",
+  contactLabel: "Contact",
 }

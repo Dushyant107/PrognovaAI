@@ -1,0 +1,104 @@
+.title {
+  margin-top: var(--space-4);
+}
+
+.phases {
+  display: grid;
+  gap: var(--space-5);
+  counter-reset: phase;
+}
+
+.phase {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  padding: var(--space-6);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.phaseHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.months {
+  font-family: var(--font-mono);
+  font-size: var(--step-mono);
+  color: var(--muted);
+}
+
+.block {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.blockLabel {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.milestones {
+  display: grid;
+  gap: 6px;
+  color: var(--ink-body);
+}
+
+.milestones li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.milestones li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 8px;
+  height: 1px;
+  background: var(--teal);
+}
+
+.gate {
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--line-strong);
+}
+
+.gate p {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.gate .blockLabel {
+  color: var(--lime);
+}
+
+@media (min-width: 900px) {
+  .phases {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .phase::after {
+    content: "";
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 1px solid var(--teal);
+    border-bottom: 1px solid var(--teal);
+    transform: translateY(-50%) rotate(-45deg);
+  }
+
+  .phase:last-child::after {
+    display: none;
+  }
+}

@@ -1,0 +1,112 @@
+.title {
+  margin-top: var(--space-4);
+  display: grid;
+}
+
+.line {
+  display: block;
+}
+
+.dim {
+  color: var(--teal);
+}
+
+.list {
+  border-top: 1px solid var(--line-strong);
+}
+
+.item {
+  border-bottom: 1px solid var(--line);
+  transition: background-color 240ms var(--ease-out);
+}
+
+.item[data-open] {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.q {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  grid-template-areas:
+    "i name icon"
+    "i text icon";
+  align-items: center;
+  column-gap: var(--space-4);
+  row-gap: 4px;
+  padding: var(--space-5) var(--space-3) var(--space-5) 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.index {
+  grid-area: i;
+  font-family: var(--font-mono);
+  font-size: var(--step-mono);
+  color: var(--teal);
+}
+
+.riskName {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--step-h3);
+  letter-spacing: -0.015em;
+  transition: color 160ms var(--ease-out);
+}
+
+.q:hover .riskName {
+  color: var(--teal);
+}
+
+.riskText {
+  grid-area: text;
+  color: var(--muted);
+  font-size: var(--step-small);
+}
+
+.icon {
+  grid-area: icon;
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.item[data-open] .icon {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.answer {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0 0 var(--space-5) 2.5rem;
+  max-width: 64ch;
+}
+
+.answerLabel {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+
+.answer p {
+  color: var(--ink-body);
+}
+
+@media (min-width: 900px) {
+  .answer {
+    padding-left: calc(2.5rem + var(--space-4));
+  }
+}

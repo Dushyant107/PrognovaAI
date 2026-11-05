@@ -1,10 +1,10 @@
 import { motion } from "motion/react"
-import { countries, type Country } from "../content"
+import { links, nav } from "../content"
 import styles from "./Header.module.css"
 
-type Props = { country: Country; onCountry: (c: Country) => void; visible: boolean }
+type Props = { visible: boolean }
 
-export function Header({ country, onCountry, visible }: Props) {
+export function Header({ visible }: Props) {
   return (
     <motion.header
       className={styles.header}
@@ -14,31 +14,22 @@ export function Header({ country, onCountry, visible }: Props) {
       style={{ pointerEvents: visible ? "auto" : "none" }}
       aria-hidden={!visible}
     >
-      <div className={styles.pill}>
-        <a href="#top" className={styles.logo} aria-label="Prognova Health, home">
+      <div className={`container ${styles.row}`}>
+        <a href="#top" className={styles.logo} aria-label="Prognova home">
           <img src="/logo.webp" alt="" width="132" height="37" />
         </a>
-        <nav className={styles.nav} aria-label="Sections">
-          <a href="#stages">What it does</a>
-          <a href="#prices">Prices</a>
-          <a href="#trust">Who decides</a>
-          <a href="#faq">Questions</a>
+
+        <nav className={`glass ${styles.pill}`} aria-label="Sections">
+          {nav.map((n) => (
+            <a key={n.href} href={n.href}>
+              <span>{n.label}</span>
+            </a>
+          ))}
         </nav>
-        <div className={styles.actions}>
-          <label className={styles.country}>
-            <span className="visually-hidden">Prices for patients from</span>
-            <select value={country} onChange={(e) => onCountry(e.target.value as Country)}>
-              {(Object.keys(countries) as Country[]).map((c) => (
-                <option key={c} value={c}>
-                  {countries[c].currency}
-                </option>
-              ))}
-            </select>
-          </label>
-          <a className="button" href="#closing">
-            Book a call
-          </a>
-        </div>
+
+        <a className={`button ${styles.cta}`} href={links.chat} target="_blank" rel="noreferrer">
+          Try Prognova AI <span className="arrow">↗</span>
+        </a>
       </div>
     </motion.header>
   )
