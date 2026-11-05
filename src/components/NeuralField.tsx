@@ -59,20 +59,11 @@ export function NeuralField() {
       const L = linkDist()
       const L2 = L * L
 
-      // Move nodes, with a soft pull toward the pointer.
+      // Move nodes on their own slow drift. The pointer no longer pulls them.
+      void pointer
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i]
         if (!reduce) {
-          const dx = pointer.x - n.x
-          const dy = pointer.y - n.y
-          const d2 = dx * dx + dy * dy
-          if (d2 < 260 * 260) {
-            const f = (1 - Math.sqrt(d2) / 260) * 0.0025 * n.depth
-            n.vx += dx * f * dt
-            n.vy += dy * f * dt
-          }
-          n.vx *= 0.995
-          n.vy *= 0.995
           n.x += n.vx * dt * 0.06
           n.y += n.vy * dt * 0.06
           if (n.x < -20) n.x = width + 20

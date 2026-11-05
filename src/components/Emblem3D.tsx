@@ -166,14 +166,14 @@ function Emblem({ still, progress }: { still: boolean; progress?: MotionValue<nu
                 ref={(el) => {
                   materials.current[p.id] = el
                 }}
-                color="#8fa682"
+                color="#8fe0d3"
                 roughness={0.42}
                 metalness={0.08}
                 clearcoat={0.6}
                 clearcoatRoughness={0.3}
                 sheen={0.4}
-                sheenColor="#c9e27a"
-                emissive="#5b7650"
+                sheenColor="#9fe8ff"
+                emissive="#2a8f85"
                 emissiveIntensity={0.1}
               />
             ) : (
@@ -181,12 +181,12 @@ function Emblem({ still, progress }: { still: boolean; progress?: MotionValue<nu
                 ref={(el) => {
                   materials.current[p.id] = el
                 }}
-                color="#0b4f42"
+                color="#0f4f58"
                 roughness={0.3}
                 metalness={0.18}
                 clearcoat={0.9}
                 clearcoatRoughness={0.22}
-                emissive="#0f6b57"
+                emissive="#1b7f74"
                 emissiveIntensity={0.2}
               />
             )}
@@ -214,7 +214,7 @@ function DroppingLight({ still }: { still: boolean }) {
     l.position.set(0.4 * Math.sin(k * Math.PI * 2), 3.2 - 6.4 * k, 2.6)
     l.intensity = Math.sin(k * Math.PI) * 26
   })
-  return <pointLight ref={light} color="#c9e27a" distance={9} decay={2} />
+  return <pointLight ref={light} color="#8fe6ff" distance={9} decay={2} />
 }
 
 // Base lights ride with the camera, so the side facing the viewer is always lit.
@@ -229,8 +229,8 @@ function CameraLights() {
   return createPortal(
     <>
       <directionalLight position={[4, 5, 3]} intensity={1.7} color="#f2f8f3" />
-      <directionalLight position={[-5, -2, 3]} intensity={0.8} color="#c9e27a" />
-      <directionalLight position={[0, 4, -8]} intensity={0.6} color="#2fa08a" />
+      <directionalLight position={[-5, -2, 3]} intensity={0.8} color="#6fd6ff" />
+      <directionalLight position={[0, 4, -8]} intensity={0.6} color="#3fc1b0" />
     </>,
     camera,
   )
@@ -246,7 +246,7 @@ export default function Emblem3D({ progress }: { progress?: MotionValue<number> 
       style={{ touchAction: "pan-y" }}
     >
       <ambientLight intensity={0.5} />
-      <spotLight position={[0, 7, 3]} angle={0.55} penumbra={1} intensity={6} color="#dfeea8" distance={20} />
+      <spotLight position={[0, 7, 3]} angle={0.55} penumbra={1} intensity={6} color="#bfeaf5" distance={20} />
       <CameraLights />
       <DroppingLight still={reduce} />
       <Emblem still={reduce} progress={progress} />
